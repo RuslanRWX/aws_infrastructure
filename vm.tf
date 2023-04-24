@@ -2,6 +2,7 @@ resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
   public_key = file("data/ssh/deployer.pub.key")
 }
+
 #
 #resource "aws_network_interface" "test_vm_nic1" {
 #  subnet_id = aws_subnet.vpc0_subnet.id

@@ -4,3 +4,8 @@ resource "aws_vpc" "vpc0-frankfurt" {
   enable_dns_hostnames = true
 }
 
+resource "random_string" "rds_password" {
+  special = false
+  length  = 20
+}
+
