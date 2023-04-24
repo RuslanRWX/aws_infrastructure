@@ -1,5 +1,5 @@
 # aws_infrastructure
-AWS infrastructure
+AWS infrastructure - terrafrom code to deply simple AWS infrastructire.
 
 
 vm.tf - add VMs to the file
