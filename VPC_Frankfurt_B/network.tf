@@ -2,7 +2,7 @@
 ### subnets
 resource "aws_subnet" "vpc0_subnet" {
   vpc_id            = aws_vpc.vpc0-frankfurt.id
-  cidr_block        = "10.0.0.0/24"
+  cidr_block        = "10.1.0.0/24"
   availability_zone = local.availability_zone_vpc0
 
   tags = {
@@ -12,7 +12,7 @@ resource "aws_subnet" "vpc0_subnet" {
 
 resource "aws_subnet" "vpc0_subnet1" {
   vpc_id            = aws_vpc.vpc0-frankfurt.id
-  cidr_block        = "10.0.3.0/24"
+  cidr_block        = "10.1.3.0/24"
   availability_zone = local.availability_zone_vpc0
 
   tags = {
@@ -22,7 +22,7 @@ resource "aws_subnet" "vpc0_subnet1" {
 
 resource "aws_subnet" "vpc0_subnet_rds0" {
   vpc_id            = aws_vpc.vpc0-frankfurt.id
-  cidr_block        = "10.0.1.0/24"
+  cidr_block        = "10.1.1.0/24"
   availability_zone = local.availability_zone_vpc0
 
   tags = {
@@ -31,7 +31,7 @@ resource "aws_subnet" "vpc0_subnet_rds0" {
 }
 resource "aws_subnet" "vpc0_subnet_rds1" {
   vpc_id            = aws_vpc.vpc0-frankfurt.id
-  cidr_block        = "10.0.2.0/24"
+  cidr_block        = "10.1.2.0/24"
   availability_zone = local.availability_zone_b_vpc0
 
   tags = {
