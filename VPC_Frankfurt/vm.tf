@@ -44,7 +44,7 @@ resource "aws_key_pair" "deployer" {
 #}
 ####### work 
 #module "vm0" {
-#  source               = "../../modules/ec2"
+#  source               = "../modules/ec2"
 #  aws_instance_name    = "vm00"
 #  ami                  = "ami-0c0d3776ef525d5dd"
 #  instance_type        = "t2.micro"
@@ -64,7 +64,7 @@ resource "aws_key_pair" "deployer" {
 #}
 
 module "vm01" {
-  source               = "../../modules/ec2"
+  source               = "../modules/ec2"
   aws_instance_name    = "vm01"
   ami                  = "ami-0c0d3776ef525d5dd"
   instance_type        = "t2.micro"
