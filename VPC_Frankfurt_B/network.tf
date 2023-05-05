@@ -40,7 +40,7 @@ resource "aws_subnet" "vpc0_subnet_rds1" {
 }
 
 resource "aws_db_subnet_group" "vpc0_subnetDB" {
-  name       = "db_subnet"
+  name       = "db_subnet-b"
   subnet_ids = [aws_subnet.vpc0_subnet_rds0.id, aws_subnet.vpc0_subnet_rds1.id]
 
   tags = {
