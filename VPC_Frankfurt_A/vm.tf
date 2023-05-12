@@ -5,7 +5,7 @@ resource "aws_key_pair" "deployer" {
 
 #
 #resource "aws_network_interface" "test_vm_nic1" {
-#  subnet_id = aws_subnet.vpc0_subnet.id
+#  subnet_id = aws_subnet.vpc0_subnet1.id
 #  private_ips = ["10.0.1.10"]
 #  #  associate_public_ip_address = true
 #  # vpc_security_group_ids = [aws_security_group.ingress-all-test.id]
@@ -69,18 +69,66 @@ module "vm01" {
   ami                  = "ami-0c0d3776ef525d5dd"
   instance_type        = "t2.micro"
   security_groups      = [module.ssh_nsg.id, module.http_nsg.id]
+  subnetID             = aws_subnet.vpc0_subnet.id
+  eip                  = true
+  ssh_key              = aws_key_pair.deployer.id
+  iam_instance_profile = "ec2_s3_policy"
+  user_data            = file("../data/cloudinit/awscli.sh")
+  #  user_data = join("\n", [
+  #    file("../data/cloudinit/update.sh"),
+  #    file("../data/cloudinit/httpd.sh"),
+  #    file("../data/cloudinit/cloudwatch-agent.sh")
+  #    ]
+  #  )
+
+}
+## NIC 
+resource "aws_network_interface" "vm01_nic2" {
+  subnet_id       = aws_subnet.vpc0_subnet1.id
+  security_groups = [module.ssh_nsg.id]
+  # ...
+}
+
+resource "aws_network_interface_attachment" "vm01_nic2" {
+  instance_id          = module.vm01.id
+  network_interface_id = aws_network_interface.vm01_nic2.id
+  device_index         = 1
+}
+
+## VM02
+
+module "vm02" {
+  source               = "../modules/ec2"
+  aws_instance_name    = "vm02"
+  ami                  = "ami-0c0d3776ef525d5dd"
+  instance_type        = "t2.micro"
+  security_groups      = [module.ssh_nsg.id, module.http_nsg.id]
   subnetID             = aws_subnet.vpc0_subnet1.id
   eip                  = true
   ssh_key              = aws_key_pair.deployer.id
-  iam_instance_profile = "cloudwatch_policy"
-  user_data = join("\n", [
-    file("../data/cloudinit/update.sh"),
-    file("../data/cloudinit/httpd.sh"),
-    file("../data/cloudinit/cloudwatch-agent.sh")
-    ]
-  )
+  iam_instance_profile = "ec2_s3_policy"
+  user_data            = file("../data/cloudinit/awscli.sh")
+  #  user_data = join("\n", [
+  #    file("../data/cloudinit/update.sh"),
+  #    file("../data/cloudinit/httpd.sh"),
+  #    file("../data/cloudinit/cloudwatch-agent.sh")
+  #    ]
+  #  )
 
 }
+## NIC 
+#resource "aws_network_interface" "vm02_nic2" {
+#  subnet_id       = aws_subnet.vpc0_subnet1.id
+#  security_groups = [module.ssh_nsg.id]
+#  # ...
+#}
+#
+#resource "aws_network_interface_attachment" "vm02_nic2" {
+#  instance_id          = module.vm02.id
+#  network_interface_id = aws_network_interface.vm02_nic2.id
+#  device_index         = 1
+#}
+
 #######
 ### Add EBS
 #resource "aws_volume_attachment" "ebs_att_vm0" {

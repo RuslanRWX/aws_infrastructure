@@ -45,7 +45,6 @@ resource "aws_iam_role" "cloudwatch_policy" {
 }
 
 
-
 # Attach CloudWatch policy to IAM role
 resource "aws_iam_role_policy_attachment" "cloudwatch_admin_policy" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentAdminPolicy"
@@ -61,4 +60,32 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_policy" {
 resource "aws_iam_instance_profile" "cloudwatch_policy" {
   name = "cloudwatch_policy"
   role = aws_iam_role.cloudwatch_policy.name
+}
+
+# S3 access for EC2
+
+resource "aws_iam_role" "ec2_s3_policy" {
+  name = "ec2_s3_policy"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+
+resource "aws_iam_role_policy_attachment" "ec2_s3_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  role       = aws_iam_role.ec2_s3_policy.name
+}
+resource "aws_iam_instance_profile" "ec2_s3_policy" {
+  name = "ec2_s3_policy"
+  role = aws_iam_role.ec2_s3_policy.name
 }
