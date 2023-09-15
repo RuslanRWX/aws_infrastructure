@@ -80,7 +80,6 @@ module "vm01" {
       file("../data/cloudinit/cloudwatch-agent.sh")
       ]
     )
-
 }
 # NIC 
 resource "aws_network_interface" "vm01_nic2" {
