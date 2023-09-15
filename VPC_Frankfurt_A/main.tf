@@ -11,6 +11,6 @@ resource "aws_vpc" "vpc0-frankfurt" {
 
 resource "random_string" "rds_password" {
   special = false
-  length  = 20
+  length  = 10
 }
 
