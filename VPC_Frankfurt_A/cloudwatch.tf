@@ -29,28 +29,28 @@
 #  log_group_name = aws_cloudwatch_log_group.log_group.name
 #}
 # Set up CloudWatch monitoring for the EC2 instance
-resource "aws_cloudwatch_metric_alarm" "cpu_utilization" {
-  alarm_name          = "cpu-utilization-70"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "1"
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/EC2"
-  period              = "60"
-  statistic           = "Average"
-  threshold           = "70"
-  alarm_description   = "This metric checks CPU utilization and triggers an alarm if it's above 70%."
-
-  alarm_actions = [
-    aws_sns_topic.cpu_utilization_70.arn
-  ]
-
-  dimensions = {
-    InstanceId = module.vm01.id
-  }
-}
-
-
-# Create an SNS topic for alarm notifications
-resource "aws_sns_topic" "cpu_utilization_70" {
-  name = "cpu-utilization-70"
-}
+##resource "aws_cloudwatch_metric_alarm" "cpu_utilization" {
+##  alarm_name          = "cpu-utilization-70"
+##  comparison_operator = "GreaterThanOrEqualToThreshold"
+##  evaluation_periods  = "1"
+##  metric_name         = "CPUUtilization"
+##  namespace           = "AWS/EC2"
+##  period              = "60"
+##  statistic           = "Average"
+##  threshold           = "70"
+##  alarm_description   = "This metric checks CPU utilization and triggers an alarm if it's above 70%."
+##
+##  alarm_actions = [
+##    aws_sns_topic.cpu_utilization_70.arn
+##  ]
+##
+##  dimensions = {
+##    InstanceId = module.vm01.id
+##  }
+##}
+##
+##
+### Create an SNS topic for alarm notifications
+##resource "aws_sns_topic" "cpu_utilization_70" {
+##  name = "cpu-utilization-70"
+##}
